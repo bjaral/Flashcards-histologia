@@ -1,0 +1,3 @@
+Recordar buscar cómo usar las licencias de:
+pillow - CMU Licence (MIT-CMU)
+django - BSD 3-Clause

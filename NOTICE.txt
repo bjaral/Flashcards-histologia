@@ -1,0 +1,3 @@
+Este software utiliza:
+- Django (BSD 3-Clause Licence): https://www.djangoproject.com/
+- Pillow (MIT-CMU Licence): https://python-pillow.github.io/

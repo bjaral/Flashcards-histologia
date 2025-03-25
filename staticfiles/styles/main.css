@@ -1,0 +1,140 @@
+:root {
+    /* Colores primarios */
+    --cp1: #8421a1;
+    --cp2: #be34c8;
+    --cp3: #dc9fe5;
+    --cp4: #ebd4f4;
+    --cp5: #ebd4f4;
+    --cp6: #311052;
+
+    /* Colores de fondo */
+    --cf1: #ffffff;
+    --cf2: #1d0733;
+
+    /* Color neutral */
+    --cn: #b1a0b1;
+
+    /* Colores de sistema */
+    --csi1: #ff327a;
+    /* Incorrecto 1 */
+    --csi2: #ff6399;
+    /* Incorrecto 2 */
+    --cso1: #ff7243;
+    /* Ok 1 */
+    --cso2: #ff9e7d;
+    /* Ok 2 */
+    --csc1: #86ff35;
+    /* Correcto 1 */
+    --csc2: #cfffae;
+    /* Correcto 2 */
+    --csa: #9946ff;
+    /* Alerta */
+
+    /* Colores de texto */
+    --ctext1: #311052;
+    --ctext2: #8421a1;
+    --ctext3: #be34c8;
+    --ctext4: #ffffff;
+    --ctext5: #f4baf9;
+
+    /* Border Radius */
+    --br1: 10px;
+    --br2: 20px;
+    --br3: 17px;
+    --br4: 40px;
+}
+
+body,
+html {
+    height: 100%;
+    min-height: 100vh;
+    background-color: #f2f2f2;
+    font-family: "Inter", "Instrument Sans", "Montserrat", system-ui,
+        -apple-system, sans-serif;
+    font-size: 15px;
+    line-height: auto;
+    letter-spacing: 0%;
+}
+
+header,
+.menu {
+    background-color: var(--cp6);
+}
+
+h1 {
+    font-size: 45px;
+    line-height: auto;
+    letter-spacing: 0%;
+}
+
+h2 {
+    font-size: 37px;
+    line-height: auto;
+    letter-spacing: 0%;
+}
+
+h3 {
+    font-size: 31px;
+    line-height: auto;
+    letter-spacing: 0%;
+}
+
+h4 {
+    font-size: 26px;
+    line-height: auto;
+    letter-spacing: 0%;
+}
+
+h5 {
+    font-size: 22px;
+    line-height: auto;
+    letter-spacing: 0%;
+}
+
+.small-text {
+    font-size: 11px;
+}
+
+a {
+    font-size: 15px;
+    text-decoration: underline;
+}
+
+button {
+    font-size: 15px;
+    font-weight: bold;
+}
+
+main {
+    padding-inline: calc(var(--spacing) * 16);
+    padding-top: calc(var(--spacing) * 6);
+    padding-bottom: calc(var(--spacing) * 6);
+}
+
+.ulnav>li {
+    margin-top: 30px;
+    border-radius: var(--br1);
+    transition: background-color 0.2s ease-in-out;
+}
+
+.ulnav>li>a {
+    color: var(--ctext5);
+    font-size: 20px;
+}
+
+.ulnav>li:hover {
+    background-color: color-mix(in srgb, var(--cp6) 60%, var(--cp1));
+    
+}
+
+.ulnav>li>a:hover {
+    color: var(--ctext4);
+}
+
+.drop-shadow {
+    box-shadow: 10px 10px 15px 5px rgba(0, 0, 0, 0.3);
+}
+
+.top-shadow {
+    box-shadow: 0px -10px 20px 5px rgba(0, 0, 0, 0.3);
+}

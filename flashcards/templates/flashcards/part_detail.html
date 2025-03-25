@@ -1,0 +1,79 @@
+{% extends 'layouts/base.html' %} {% block page_title %}Flashcards{% endblock %}
+{% block content %}
+
+<div class="relative px-6 py-8">
+  <!-- Botón de estudiar -->
+  <div class="flex justify-center mb-8">
+    <a
+      href="{% url 'estudiar_flashcards' parte.id %}"
+      class="bg-white px-6 py-3 rounded-full shadow-lg hover:shadow-xl transition-shadow"
+      style="color: var(--ctext1)"
+    >
+      Estudiar flashcard
+    </a>
+  </div>
+
+  <!-- Grid de flashcards -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+    {% for flashcard in flashcards %}
+    <div class="flip-card w-full max-w-[600px] h-[475px] perspective-1000">
+      <div class="flip-card-inner relative w-full h-full transition-transform duration-700 transform-style-3d cursor-pointer">
+        <!-- Frente de la carta -->
+        <div class="flip-card-front absolute w-full h-full backface-hidden">
+          <div class="bg-white rounded-3xl shadow-lg overflow-hidden h-full">
+            <div class="p-4">
+              <img
+                src="{{ parte.imagen_flashcards.url }}"
+                alt="Flashcard imagen"
+                class="w-full h-full rounded-2xl"
+              />
+            </div>
+            <div class="px-6">
+              <p class="text-sm" style="color: var(--ctext1)">
+                {{ flashcard.pregunta }}
+              </p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Reverso de la carta -->
+        <div class="flip-card-back absolute w-full h-full backface-hidden rotate-y-180">
+          <div class="bg-white rounded-3xl shadow-lg overflow-hidden h-full p-6 flex items-center justify-center">
+            <pre class="text-lg whitespace-pre-wrap" style="color: var(--ctext1)">
+              {{ flashcard.respuesta | linebreaks }}
+            </pre>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+<style>
+  .perspective-1000 {
+    perspective: 1000px;
+  }
+  .transform-style-3d {
+    transform-style: preserve-3d;
+  }
+  .backface-hidden {
+    backface-visibility: hidden;
+  }
+  .rotate-y-180 {
+    transform: rotateY(180deg);
+  }
+  .flip-card.flipped .flip-card-inner {
+    transform: rotateY(180deg);
+  }
+</style>
+
+<script>
+  document.querySelectorAll('.flip-card').forEach(card => {
+    card.addEventListener('click', () => {
+      card.classList.toggle('flipped');
+    });
+  });
+</script>
+
+{% endblock %}

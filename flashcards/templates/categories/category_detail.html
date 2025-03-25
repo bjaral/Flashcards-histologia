@@ -1,0 +1,21 @@
+{% extends 'layouts/base.html' %}
+
+{% block page_title %}{{ categoria.nombre }}{% endblock %}
+
+{% block content %}
+<div class="bg-gradient-to-b from-purple-100 to-purple-300 min-h-screen relative z-0 pt-8 px-6">
+    <div class="relative">
+        <h2 class="font-bold mb-6 px-6" style="color: var(--ctext1)">{{ categoria.nombre }}</h2>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 px-6">
+            {% for parte in partes %}
+            <div class="image-text-container">
+                <img src="{{ parte.imagen_parte.url }}" 
+                     alt="{{ parte.nombre }}"
+                >
+                <h5>{{ parte.nombre }}</h5>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,186 @@
+{% extends 'layouts/base.html' %} {% block page_title %}Nosotros{% endblock %}
+{% load static %}
+{% block content %}
+<div
+  class="bg-gradient-to-b from-purple-100 to-purple-300 min-h-screen relative z-0"
+>
+  <!-- Ondas decorativas superiores -->
+  <div class="absolute top-0 left-0 w-full h-64 overflow-hidden z-0">
+    <svg viewBox="0 0 500 150" preserveAspectRatio="none" class="w-full h-full">
+      <path
+        d="M0.00,49.98 C150.00,150.00 349.20,-50.00 500.00,49.98 L500.00,0.00 L0.00,0.00 Z"
+        style="stroke: none; fill: #f3e8ff"
+      ></path>
+    </svg>
+  </div>
+
+  <!-- Contenido principal -->
+  <div class="relative z-10 px-6 py-8">
+        <!-- Sección Sobre Nosotros -->
+        <div
+        class="bg-white rounded-3xl shadow-lg overflow-hidden max-w-5xl mx-auto mb-16 p-8"
+      >
+        <h2 class="text-4xl font-bold mb-6 text-purple-900">Sobre nosotros</h2>
+  
+        <div class="flex flex-col md:flex-row gap-8">
+          <!-- Imagen (visible en móvil arriba) -->
+          <div class="block md:hidden w-full mb-6">
+            <img
+              src="{% static 'images/institutional/UDEC.jpeg' %}"
+              alt="Facultad de Medicina"
+              class="w-full h-auto rounded-xl shadow-md"
+            />
+          </div>
+  
+          <!-- Texto -->
+          <div class="md:w-1/2">
+            <p class="text-gray-800 mb-4">
+              En Histoflashcards, transformamos el estudio de histología en una
+              experiencia sencilla y efectiva. Ofrecemos flashcards diseñadas para
+              facilitar el aprendizaje y la memorización, adaptadas a las
+              necesidades de estudiantes de medicina y áreas afines. Nuestro
+              compromiso es ayudarte a convertir el conocimiento complejo en algo
+              accesible y práctico. ¡Estudiar nunca fue tan fácil!
+            </p>
+  
+            <div class="flex items-center mt-6 space-x-4">
+              <img src="{% static 'images/institutional/Escudo-UDEC.png' %}" alt="Logo UdeC" class="h-16" />
+              <img
+                src="{% static 'images/institutional/Logo-facultad-de-medicina.png' %}"
+                alt="Logo Medicina"
+                class="h-16"
+              />
+            </div>
+          </div>
+  
+          <!-- Imagen (visible solo en desktop) -->
+          <div class="hidden md:block md:w-1/2">
+            <img
+              src="{% static 'images/institutional/UDEC.jpeg' %}"
+              alt="Facultad de Medicina"
+              class="w-full h-auto rounded-xl shadow-md"
+            />
+          </div>
+        </div>
+      </div>
+
+    <!-- Sección Preguntas Frecuentes -->
+    <div
+      class="bg-white rounded-3xl shadow-lg overflow-hidden max-w-5xl mx-auto mb-16 p-8"
+    >
+      <h2 class="text-4xl font-bold mb-6 text-purple-900">
+        Preguntas frecuentes
+      </h2>
+
+      <div class="space-y-2">
+        <!-- Pregunta 1 -->
+        <div
+          tabindex="0"
+          class="collapse collapse-arrow bg-white border-purple-200 border rounded-lg"
+        >
+          <div class="collapse-title font-medium text-lg text-purple-900">
+            ¿Existen copias físicas de las flashcards?
+          </div>
+          <div class="collapse-content text-sm text-gray-700">
+            <p>
+              No, actualmente solo ofrecemos versiones digitales de nuestras
+              flashcards.
+            </p>
+          </div>
+        </div>
+
+        <!-- Pregunta 2 -->
+        <div
+          tabindex="0"
+          class="collapse collapse-arrow bg-white border-purple-200 border rounded-lg"
+        >
+          <div class="collapse-title font-medium text-lg text-purple-900">
+            No me funcionan las flashcards, ¿qué hago?
+          </div>
+          <div class="collapse-content text-sm text-gray-700">
+            <p>
+              Asegúrate de tener una conexión estable a internet y utilizar un
+              navegador actualizado. Si el problema persiste, contáctanos por
+              correo electrónico.
+            </p>
+          </div>
+        </div>
+
+        <!-- Pregunta 3 -->
+        <div
+          tabindex="0"
+          class="collapse collapse-arrow bg-white border-purple-200 border rounded-lg"
+        >
+          <div class="collapse-title font-medium text-lg text-purple-900">
+            Hay un error en las imágenes.
+          </div>
+          <div class="collapse-content text-sm text-gray-700">
+            <p>
+              Si encuentras algún error en las imágenes, por favor repórtalo a
+              través de nuestro correo electrónico con el detalle del problema.
+            </p>
+          </div>
+        </div>
+
+        <!-- Pregunta 4 -->
+        <div
+          tabindex="0"
+          class="collapse collapse-arrow bg-white border-purple-200 border rounded-lg"
+        >
+          <div class="collapse-title font-medium text-lg text-purple-900">
+            Hay un error en las respuestas.
+          </div>
+          <div class="collapse-content text-sm text-gray-700">
+            <p>
+              Nuestro equipo revisa cuidadosamente el contenido, pero si
+              encuentras algún error en las respuestas, por favor infórmanos
+              para corregirlo lo antes posible.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sección Contacto -->
+    <div
+      class="bg-white rounded-3xl shadow-lg overflow-hidden max-w-5xl mx-auto mb-16 p-8"
+    >
+      <h2 class="text-4xl font-bold mb-6 text-purple-900">Contacto</h2>
+
+      <div class="flex flex-col md:flex-row gap-8">
+        <div class="md:w-1/2">
+          <div class="mb-4">
+            <p class="font-medium">Miriam Aedo Venegas</p>
+            <p>Secretaria Ejecutiva</p>
+            <p>Comité Ético Científico</p>
+          </div>
+
+          <div class="mb-4">
+            <p>E-mail: cecmedicina@udec.cl</p>
+            <p>Teléfono: +56 41 2204935</p>
+          </div>
+        </div>
+
+        <div class="md:w-1/2">
+          <div class="mb-4">
+            <p>Chacabuco esquina Janequeo S/N, Concepción</p>
+            <p>Teléfono: +56 41 2661113</p>
+            <p>E-mail: medicina@udec.cl</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ondas decorativas inferiores -->
+  <div class="absolute bottom-0 left-0 w-full h-64 overflow-hidden z-0">
+    <svg viewBox="0 0 500 150" preserveAspectRatio="none" class="w-full h-full">
+      <path
+        d="M0.00,49.98 C150.00,150.00 349.20,-50.00 500.00,49.98 L500.00,150.00 L0.00,150.00 Z"
+        style="stroke: none; fill: #f3e8ff"
+      ></path>
+    </svg>
+  </div>
+</div>
+
+{% endblock %}

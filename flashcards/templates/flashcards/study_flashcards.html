@@ -1,0 +1,155 @@
+{% extends 'layouts/base.html' %}
+
+{% block page_title %}Estudiando {{ parte.nombre }}{% endblock %}
+
+{% block content %}
+<div class="bg-gradient-to-b from-purple-900 to-purple-950 min-h-screen relative z-0">
+    <div class="relative px-6 py-8">
+        <div class="flex flex-col items-center">
+            <!-- Contenedor de flashcard actual -->
+            <div id="flashcard-container" class="w-full max-w-[800px] mb-8">
+                <!-- Contenido de la flashcard -->
+                <div id="card-front" class="bg-white rounded-3xl shadow-lg overflow-hidden p-8">
+                    <!-- Número y pregunta -->
+                    <h3 id="question-text" class="text-xl mb-6 text-center" style="color: var(--ctext1)"></h3>
+                    
+                    <!-- Imagen -->
+                    <div class="aspect-square max-w-[600px] mx-auto">
+                        <img id="card-image" src=""
+                             alt="Flashcard imagen"
+                             class="w-full h-full object-cover object-center"
+                             style="clip-path: inset(3% 4.8% 7.3% 5%)" />
+                    </div>
+
+                    <!-- Botón de ver respuesta -->
+                    <div class="flex justify-center mt-6">
+                        <button id="show-answer-btn" class="px-8 py-3 rounded-full text-white" 
+                                style="background-color: var(--cp1)">
+                            Ver respuesta
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Reverso de la carta (inicialmente oculto) -->
+                <div id="card-back" class="hidden bg-white rounded-3xl shadow-lg overflow-hidden p-8">
+                    <div id="answer-content" class="text-center text-xl mb-8" style="color: var(--ctext1)"></div>
+                    
+                    <div class="flex justify-center">
+                        <button id="flip-back-btn" class="px-8 py-3 rounded-full text-white" 
+                                style="background-color: var(--cp1)">
+                            Voltear
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Botones de evaluación (inicialmente ocultos) -->
+            <div id="evaluation-buttons" class="hidden flex gap-4 mt-4 w-full max-w-[800px] justify-between">
+                <button id="dont-know-btn" class="px-8 py-3 rounded-full text-white flex-1" style="background-color: var(--csi1)">
+                    No lo sé
+                </button>
+                <button id="somewhat-know-btn" class="px-8 py-3 rounded-full text-white flex-1" style="background-color: var(--cso1)">
+                    Más o menos
+                </button>
+                <button id="know-btn" class="px-8 py-3 rounded-full text-white flex-1" style="background-color: var(--csc1)">
+                    Lo sé
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Datos de las flashcards
+    const flashcards = [
+        {% for flashcard in flashcards %}
+            {
+                id: {{ flashcard.id }},
+                imagen: "{{ parte.imagen_flashcards.url }}",
+                pregunta: "{{ flashcard.pregunta|escapejs }}",
+                respuesta: "{{ flashcard.respuesta|escapejs }}"
+            }{% if not forloop.last %},{% endif %}
+        {% endfor %}
+    ];
+
+    // Elementos del DOM
+    const cardFront = document.getElementById('card-front');
+    const cardBack = document.getElementById('card-back');
+    const questionText = document.getElementById('question-text');
+    const cardImage = document.getElementById('card-image');
+    const answerContent = document.getElementById('answer-content');
+    const showAnswerBtn = document.getElementById('show-answer-btn');
+    const flipBackBtn = document.getElementById('flip-back-btn');
+    const evaluationButtons = document.getElementById('evaluation-buttons');
+    const dontKnowBtn = document.getElementById('dont-know-btn');
+    const somewhatKnowBtn = document.getElementById('somewhat-know-btn');
+    const knowBtn = document.getElementById('know-btn');
+
+    // Variables de estado
+    let currentIndex = 0;
+    const results = {};
+
+    // Inicializar la primera flashcard
+    function initializeFlashcard() {
+        const flashcard = flashcards[currentIndex];
+        
+        // Actualizar el número y la pregunta
+        questionText.textContent = `${currentIndex + 1}. ${flashcard.pregunta}`;
+        
+        // Actualizar la imagen
+        cardImage.src = flashcard.imagen;
+        
+        // Formatear la respuesta con letras y líneas
+        const formattedAnswer = flashcard.respuesta
+            .split('\n')
+            .map(line => line.trim())
+            .filter(line => line.length > 0)
+            .join('\n');
+        
+        answerContent.innerHTML = formattedAnswer;
+    }
+
+    // Mostrar la respuesta
+    showAnswerBtn.addEventListener('click', () => {
+        cardFront.classList.add('hidden');
+        cardBack.classList.remove('hidden');
+        evaluationButtons.classList.remove('hidden');
+    });
+
+    // Volver a la pregunta
+    flipBackBtn.addEventListener('click', () => {
+        cardBack.classList.add('hidden');
+        cardFront.classList.remove('hidden');
+        evaluationButtons.classList.add('hidden');
+    });
+
+    // Manejar las respuestas de evaluación
+    function handleEvaluation(score) {
+        // Guardar el resultado
+        results[flashcards[currentIndex].id] = score;
+        
+        // Avanzar a la siguiente flashcard o finalizar
+        currentIndex++;
+        
+        if (currentIndex < flashcards.length) {
+            // Mostrar la siguiente flashcard
+            cardBack.classList.add('hidden');
+            cardFront.classList.remove('hidden');
+            evaluationButtons.classList.add('hidden');
+            initializeFlashcard();
+        } else {
+            // Enviar resultados y redirigir
+            const resultsJSON = JSON.stringify(results);
+            window.location.href = `/flashcards/resultados/${encodeURIComponent(resultsJSON)}/`;
+        }
+    }
+
+    // Configurar botones de evaluación
+    dontKnowBtn.addEventListener('click', () => handleEvaluation(0));
+    somewhatKnowBtn.addEventListener('click', () => handleEvaluation(1));
+    knowBtn.addEventListener('click', () => handleEvaluation(2));
+
+    // Iniciar
+    initializeFlashcard();
+</script>
+{% endblock %}

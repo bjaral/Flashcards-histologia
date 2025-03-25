@@ -1,0 +1,101 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block Histoflashcards %}{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'styles/main.css' %}" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/daisyui@5"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style>
+      body,
+      html {
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden;
+      }
+      main {
+        padding: 0;
+        margin: 0;
+      }
+      a {
+        text-decoration: none !important;
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <!-- Developed by Benjamín Jara -->
+      <!-- bjaral on GitHub -->
+      <div class="drawer">
+        <input id="my-drawer" type="checkbox" class="drawer-toggle" />
+        <div
+          class="drawer-content px-16 py-6 flex justify-between items-center"
+        >
+          <!-- Left menu button -->
+          <label for="my-drawer" class="drawer-button"
+            ><svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="32"
+              height="32"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="white"
+              stroke-width="3"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="cursor-pointer"
+            >
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+          </label>
+
+          <!-- Centered title -->
+          <h1 class="text-white text-2xl">
+            {% block page_title %}Histoflashcards{% endblock %}
+          </h1>
+
+          <!-- Right logos -->
+          <div class="flex space-x-2">
+            <img
+              src="{% static 'images/institutional/Escudo-UDEC.png' %}"
+              alt="Logo"
+              class="h-12"
+            />
+            <img
+              src="{% static 'images/institutional/Logo-facultad-de-medicina.png' %}"
+              alt="Logo"
+              class="h-12"
+            />
+          </div>
+        </div>
+
+        <div class="drawer-side z-50">
+          <label
+            for="my-drawer"
+            aria-label="close sidebar"
+            class="drawer-overlay"
+          ></label>
+          <ul
+            class="menu bg-base-200 text-base-content min-h-full w-80 p-4 ulnav"
+          >
+            <!-- Sidebar content here -->
+            <li><a href="{% url 'inicio' %}">Inicio</a></li>
+            <li><a href="{% url 'flashcards' %}">Flashcards</a></li>
+            <li><a href="{% url 'categorias' %}">Categorías</a></li>
+            <li><a href="{% url 'sobre_nosotros' %}">Sobre nosotros</a></li>
+          </ul>
+        </div>
+      </div>
+    </header>
+    <main>{% block content %} {% endblock %}</main>
+  </body>
+</html>

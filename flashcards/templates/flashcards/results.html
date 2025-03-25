@@ -1,0 +1,156 @@
+{% extends 'layouts/base.html' %}
+
+{% block page_title %}Resultados{% endblock %}
+
+{% block content %}
+<div class="bg-gradient-to-b from-purple-900 to-purple-950 min-h-screen relative z-0">
+    <div class="relative px-6 py-8">
+        <div class="flex flex-col items-center">
+            <!-- Título -->
+            <div class="bg-white rounded-3xl shadow-lg overflow-hidden w-full max-w-[800px] mb-8">
+                <h1 class="text-4xl text-center py-6" style="color: var(--ctext1)">Resultados</h1>
+            </div>
+            
+            <!-- Gráfico y resultados -->
+            <div class="bg-white rounded-3xl shadow-lg overflow-hidden w-full max-w-[800px] p-8">
+                <!-- Gráfico de barras -->
+                <div class="flex justify-center items-end h-64 mb-4 border-b-4 border-purple-900">
+                    <!-- Barra "Lo sé" -->
+                    <div class="flex flex-col items-center mx-4 w-24">
+                        <div class="w-full bg-green-400 rounded-t-lg" 
+                             style="height: {{ total_conocidas|default:0|yesno:'240,0' }}px; max-height: 240px;"></div>
+                        <p class="text-3xl mt-4 font-bold text-purple-900">{{ total_conocidas|default:0 }}</p>
+                    </div>
+                    
+                    <!-- Barra "Más o menos" -->
+                    <div class="flex flex-col items-center mx-4 w-24">
+                        <div class="w-full bg-orange-300 rounded-t-lg" 
+                             style="height: {{ total_mas_o_menos|default:0|yesno:'240,0' }}px; max-height: 240px;"></div>
+                        <p class="text-3xl mt-4 font-bold text-purple-900">{{ total_mas_o_menos|default:0 }}</p>
+                    </div>
+                    
+                    <!-- Barra "No lo sé" -->
+                    <div class="flex flex-col items-center mx-4 w-24">
+                        <div class="w-full bg-pink-400 rounded-t-lg" 
+                             style="height: {{ total_no_conocidas|default:0|yesno:'240,0' }}px; max-height: 240px;"></div>
+                        <p class="text-3xl mt-4 font-bold text-purple-900">{{ total_no_conocidas|default:0 }}</p>
+                    </div>
+                </div>
+                
+                <!-- Acordeones de resultados -->
+                <div class="mt-8">
+                    <!-- Las sabías -->
+                    <div class="mb-4">
+                        <button id="toggle-conocidas" class="w-full bg-purple-900 text-white py-4 px-6 rounded-lg flex justify-between items-center">
+                            <span class="text-xl">Las sabías</span>
+                            <span id="arrow-conocidas" class="transform transition-transform">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </span>
+                        </button>
+                        <div id="panel-conocidas" class="hidden bg-purple-900 text-white p-6 rounded-b-lg">
+                            <ol class="list-decimal list-inside">
+                                {% for flashcard in conocidas %}
+                                    <li class="mb-2">{{ flashcard.pregunta }}</li>
+                                {% empty %}
+                                    <li>No hay flashcards en esta categoría</li>
+                                {% endfor %}
+                            </ol>
+                        </div>
+                    </div>
+                    
+                    <!-- Más o menos -->
+                    <div class="mb-4">
+                        <button id="toggle-mas-o-menos" class="w-full bg-purple-900 text-white py-4 px-6 rounded-lg flex justify-between items-center">
+                            <span class="text-xl">Más o menos</span>
+                            <span id="arrow-mas-o-menos" class="transform transition-transform">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </span>
+                        </button>
+                        <div id="panel-mas-o-menos" class="hidden bg-purple-900 text-white p-6 rounded-b-lg">
+                            <ol class="list-decimal list-inside">
+                                {% for flashcard in mas_o_menos %}
+                                    <li class="mb-2">{{ flashcard.pregunta }}</li>
+                                {% empty %}
+                                    <li>No hay flashcards en esta categoría</li>
+                                {% endfor %}
+                            </ol>
+                        </div>
+                    </div>
+                    
+                    <!-- No las sabías -->
+                    <div class="mb-4">
+                        <button id="toggle-no-conocidas" class="w-full bg-purple-900 text-white py-4 px-6 rounded-lg flex justify-between items-center">
+                            <span class="text-xl">No las sabías</span>
+                            <span id="arrow-no-conocidas" class="transform transition-transform">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </span>
+                        </button>
+                        <div id="panel-no-conocidas" class="hidden bg-purple-900 text-white p-6 rounded-b-lg">
+                            <ol class="list-decimal list-inside">
+                                {% for flashcard in no_conocidas %}
+                                    <li class="mb-2">{{ flashcard.pregunta }}</li>
+                                {% empty %}
+                                    <li>No hay flashcards en esta categoría</li>
+                                {% endfor %}
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Botones de navegación -->
+            <div class="flex flex-col sm:flex-row gap-4 mt-8">
+                {% if parte_id %}
+                <a href="{% url 'estudiar_flashcards' parte_id %}" class="bg-white px-6 py-3 rounded-full shadow-lg text-center" style="color: var(--ctext1)">
+                    Volver a estudiar flashcard
+                </a>
+                {% endif %}
+                <a href="{% url 'inicio' %}" class="bg-purple-700 text-white px-6 py-3 rounded-full shadow-lg text-center">
+                    Ir a inicio
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Funcionalidad de acordeón
+    function setupAccordion(toggleId, panelId, arrowId) {
+        const toggle = document.getElementById(toggleId);
+        const panel = document.getElementById(panelId);
+        const arrow = document.getElementById(arrowId);
+        
+        toggle.addEventListener('click', () => {
+            panel.classList.toggle('hidden');
+            arrow.classList.toggle('rotate-180');
+        });
+    }
+    
+    // Configurar los tres acordeones
+    setupAccordion('toggle-conocidas', 'panel-conocidas', 'arrow-conocidas');
+    setupAccordion('toggle-mas-o-menos', 'panel-mas-o-menos', 'arrow-mas-o-menos');
+    setupAccordion('toggle-no-conocidas', 'panel-no-conocidas', 'arrow-no-conocidas');
+    
+    // Calcular alturas de barras proporcionales
+    document.addEventListener('DOMContentLoaded', () => {
+        const total = {{ total_conocidas|default:0 }} + {{ total_mas_o_menos|default:0 }} + {{ total_no_conocidas|default:0 }};
+        if (total > 0) {
+            const maxHeight = 240; // altura máxima en píxeles
+            
+            const conocidas = document.querySelector('.bg-green-400');
+            const masOMenos = document.querySelector('.bg-orange-300');
+            const noConocidas = document.querySelector('.bg-pink-400');
+            
+            conocidas.style.height = ({{ total_conocidas|default:0 }} / total * maxHeight) + 'px';
+            masOMenos.style.height = ({{ total_mas_o_menos|default:0 }} / total * maxHeight) + 'px';
+            noConocidas.style.height = ({{ total_no_conocidas|default:0 }} / total * maxHeight) + 'px';
+        }
+    });
+</script>
+{% endblock %}

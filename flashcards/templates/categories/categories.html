@@ -1,0 +1,26 @@
+{% extends 'layouts/base.html' %}
+
+{% block page_title %}Galería{% endblock %}
+
+{% block content %}
+<div class="bg-gradient-to-b from-purple-100 to-purple-300 min-h-screen relative z-0 pt-8 px-6">
+    <div class="relative">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 px-6">
+            {% for categoria in categorias %}
+            <a href="{% url 'categoria_detalle' categoria.id %}" class="block">
+                <div class="bg-white shadow-xl overflow-hidden hover:scale-105 transition-transform" style="border-radius: var(--br3)">
+                    <div class="aspect-w-4 aspect-h-3">
+                        <img src="{{ categoria.imagen.url }}" 
+                             alt="{{ categoria.nombre }}" 
+                             class="w-full h-48 object-cover">
+                    </div>
+                    <div class="py-1 px-4">
+                        <h5 style="color: var(--ctext1)">{{ categoria.nombre }}</h5>
+                    </div>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,98 @@
+{% extends "layouts/base.html" %} 
+{% load static %} 
+{% block page_title%}Flashcards Histología 2024{% endblock %} 
+{% block content %}
+<div class="bg-gradient-to-b from-purple-100 to-purple-300 min-h-screen">
+  <!-- Galería de flashcards section -->
+  <section class="pt-8 px-6">
+    <div class="flex items-baseline mb-4">
+      <h2 class="text-purple-900 font-bold" style="">Galería de flashcards</h2>
+      <a href="{% url 'flashcards' %}" class="text-purple-700 text-sm ml-4"
+        >Ver todas &gt;</a
+      >
+    </div>
+
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <!-- Flashcard previews -->
+      <div class="image-text-container">
+        <img
+          src="{% static 'media/partes/Estómago/Estomago.png' %}"
+          alt="Estómago"
+        />
+          <h5>Estómago</h5>
+      </div>
+
+      <div class="image-text-container">
+        <img
+          src="{% static 'media/partes/Mama/mama.png' %}"
+          alt="Mama"
+        />
+          <h5>Mama</h5>
+      </div>
+
+      <div class="image-text-container">
+        <img
+          src="{% static 'images/piel.jpg' %}"
+          alt="Piel gruesa"
+        />
+          <h5>Piel gruesa</h5>
+      </div>
+
+      <div class="image-text-container">
+        <img
+          src="{% static 'media/partes/Piel fina/piel_fina.png' %}"
+          alt="Piel fina"
+        />
+          <h5>Piel fina</h5>
+      </div>
+    </div>
+  </section>
+
+  <!-- Categorías section -->
+  <section class="pt-8 px-6 mt-8">
+    <div class="flex items-baseline mb-4">
+      <h2 class="text-purple-900 font-bold" style="font-size: 37px">
+        Categorías
+      </h2>
+      <a href="{% url 'categorias' %}" class="text-purple-700 text-sm ml-4"
+        >Ver todas &gt;</a
+      >
+    </div>
+
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <!-- Category cards -->
+        <div class="image-text-container">
+        <img
+          src="{% static 'media/categorias/sistema_endocrino.png' %}"
+          alt="Sistema Endocrino"
+        />
+          <h5>Sistema endocrino</h5>
+      </div>
+
+      <div class="image-text-container">
+        <img
+          src="{% static 'media/categorias/sistema_reproductor_femenenino.png' %}"
+          alt="Sistema Reproductivo Femenino"
+        />
+        <h5>Sistema reproductor femenino</h5>
+      </div>
+
+      <div class="image-text-container">
+        <img
+          src="{% static 'media/categorias/sistema_reproductor__masculino.png' %}"
+          alt="Sistema Reproductivo Masculino"
+        />
+        <h5>Sistema reproductor masculino</h5>
+      </div>
+
+      <div class="image-text-container">
+        <img
+          src="{% static 'media/categorias/sistema_digestivo.png' %}"
+          alt="Sistema Digestivo"
+        />
+        <h5>Sistema digestivo</h5>
+      </div>
+    </div>
+  </section>
+</div>
+{% endblock %}

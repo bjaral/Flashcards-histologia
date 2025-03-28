@@ -42,6 +42,7 @@
     --br2: 20px;
     --br3: 17px;
     --br4: 40px;
+
 }
 
 body,
@@ -148,6 +149,7 @@ a {
     box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
     overflow: hidden;
     border-radius: var(--br3);
+    transition: transform 0.2s ease-in-out;
 }
 
 .image-text-container img {
@@ -158,10 +160,14 @@ a {
     aspect-ratio: 4 / 3;
 }
 
-.image-text-container h5 {
+.image-text-container:hover {
+    transform: scale(1.05);
+}
+
+.image-text-container p {
     padding-top: 0.25rem;
     padding-bottom: 0.25rem;
     padding-left: 1rem;
     padding-right: 1rem;
-    color: var(--ctext1)
+    color: var(--ctext1);
 }

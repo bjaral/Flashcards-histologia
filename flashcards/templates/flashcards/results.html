@@ -4,55 +4,60 @@
 
 {% block content %}
 <div class="bg-gradient-to-b from-purple-900 to-purple-950 min-h-screen relative z-0">
-    <div class="relative px-6 py-8">
+    <!-- Ondas decorativas inferiores -->
+    <div class="absolute bottom-0 left-0 w-full h-64 overflow-hidden z-0">
+        <svg viewBox="0 0 500 150" preserveAspectRatio="none" class="w-full h-full">
+            <path
+                d="M0.00,49.98 C150.00,150.00 349.20,-50.00 500.00,49.98 L500.00,150.00 L0.00,150.00 Z"
+                style="stroke: none; fill: #a855f7"
+            ></path>
+        </svg>
+    </div>
+
+    <div class="relative px-6 py-8 z-10">
         <div class="flex flex-col items-center">
             <!-- Título -->
-            <div class="bg-white rounded-3xl shadow-lg overflow-hidden w-full max-w-[800px] mb-8">
-                <h1 class="text-4xl text-center py-6" style="color: var(--ctext1)">Resultados</h1>
+            <div class="bg-white rounded-3xl shadow-lg overflow-hidden w-full max-w-[500px] mb-6">
+                <h1 class="text-3xl text-center py-4" style="color: var(--ctext1)">Resultados</h1>
             </div>
             
             <!-- Gráfico y resultados -->
-            <div class="bg-white rounded-3xl shadow-lg overflow-hidden w-full max-w-[800px] p-8">
+            <div class="bg-white rounded-3xl shadow-lg overflow-hidden w-full max-w-[500px] p-6">
                 <!-- Gráfico de barras -->
-                <div class="flex justify-center items-end h-64 mb-4 border-b-4 border-purple-900">
+                <div class="flex justify-center items-end h-48 mb-4 border-b-2 border-purple-900">
                     <!-- Barra "Lo sé" -->
-                    <div class="flex flex-col items-center mx-4 w-24">
+                    <div class="flex flex-col items-center mx-4 w-16">
                         <div class="w-full bg-green-400 rounded-t-lg" 
-                             style="height: {{ total_conocidas|default:0|yesno:'240,0' }}px; max-height: 240px;"></div>
-                        <p class="text-3xl mt-4 font-bold text-purple-900">{{ total_conocidas|default:0 }}</p>
+                             style="height: {{ total_conocidas|default:0|yesno:'180,0' }}px; max-height: 180px;"></div>
+                        <p class="text-2xl mt-2 font-bold text-purple-900">{{ total_conocidas|default:0 }}</p>
                     </div>
                     
                     <!-- Barra "Más o menos" -->
-                    <div class="flex flex-col items-center mx-4 w-24">
+                    <div class="flex flex-col items-center mx-4 w-16">
                         <div class="w-full bg-orange-300 rounded-t-lg" 
-                             style="height: {{ total_mas_o_menos|default:0|yesno:'240,0' }}px; max-height: 240px;"></div>
-                        <p class="text-3xl mt-4 font-bold text-purple-900">{{ total_mas_o_menos|default:0 }}</p>
+                             style="height: {{ total_mas_o_menos|default:0|yesno:'180,0' }}px; max-height: 180px;"></div>
+                        <p class="text-2xl mt-2 font-bold text-purple-900">{{ total_mas_o_menos|default:0 }}</p>
                     </div>
                     
                     <!-- Barra "No lo sé" -->
-                    <div class="flex flex-col items-center mx-4 w-24">
+                    <div class="flex flex-col items-center mx-4 w-16">
                         <div class="w-full bg-pink-400 rounded-t-lg" 
-                             style="height: {{ total_no_conocidas|default:0|yesno:'240,0' }}px; max-height: 240px;"></div>
-                        <p class="text-3xl mt-4 font-bold text-purple-900">{{ total_no_conocidas|default:0 }}</p>
+                             style="height: {{ total_no_conocidas|default:0|yesno:'180,0' }}px; max-height: 180px;"></div>
+                        <p class="text-2xl mt-2 font-bold text-purple-900">{{ total_no_conocidas|default:0 }}</p>
                     </div>
                 </div>
                 
-                <!-- Acordeones de resultados -->
-                <div class="mt-8">
+                <!-- Acordeones de resultados usando DaisyUI -->
+                <div class="mt-4 space-y-3">
                     <!-- Las sabías -->
-                    <div class="mb-4">
-                        <button id="toggle-conocidas" class="w-full bg-purple-900 text-white py-4 px-6 rounded-lg flex justify-between items-center">
-                            <span class="text-xl">Las sabías</span>
-                            <span id="arrow-conocidas" class="transform transition-transform">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                                </svg>
-                            </span>
-                        </button>
-                        <div id="panel-conocidas" class="hidden bg-purple-900 text-white p-6 rounded-b-lg">
-                            <ol class="list-decimal list-inside">
+                    <div tabindex="0" class="collapse collapse-arrow bg-purple-900 text-white rounded-lg">
+                        <div class="collapse-title text-lg font-medium py-3 px-4 flex justify-between items-center">
+                            <span>Las sabías</span>
+                        </div>
+                        <div class="collapse-content bg-purple-900 text-white p-4">
+                            <ol class="list-decimal list-inside text-sm">
                                 {% for flashcard in conocidas %}
-                                    <li class="mb-2">{{ flashcard.pregunta }}</li>
+                                    <li class="mb-1">{{ flashcard.pregunta }}</li>
                                 {% empty %}
                                     <li>No hay flashcards en esta categoría</li>
                                 {% endfor %}
@@ -61,19 +66,14 @@
                     </div>
                     
                     <!-- Más o menos -->
-                    <div class="mb-4">
-                        <button id="toggle-mas-o-menos" class="w-full bg-purple-900 text-white py-4 px-6 rounded-lg flex justify-between items-center">
-                            <span class="text-xl">Más o menos</span>
-                            <span id="arrow-mas-o-menos" class="transform transition-transform">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                                </svg>
-                            </span>
-                        </button>
-                        <div id="panel-mas-o-menos" class="hidden bg-purple-900 text-white p-6 rounded-b-lg">
-                            <ol class="list-decimal list-inside">
+                    <div tabindex="0" class="collapse collapse-arrow bg-purple-900 text-white rounded-lg">
+                        <div class="collapse-title text-lg font-medium py-3 px-4 flex justify-between items-center">
+                            <span>Más o menos</span>
+                        </div>
+                        <div class="collapse-content bg-purple-900 text-white p-4">
+                            <ol class="list-decimal list-inside text-sm">
                                 {% for flashcard in mas_o_menos %}
-                                    <li class="mb-2">{{ flashcard.pregunta }}</li>
+                                    <li class="mb-1">{{ flashcard.pregunta }}</li>
                                 {% empty %}
                                     <li>No hay flashcards en esta categoría</li>
                                 {% endfor %}
@@ -82,19 +82,14 @@
                     </div>
                     
                     <!-- No las sabías -->
-                    <div class="mb-4">
-                        <button id="toggle-no-conocidas" class="w-full bg-purple-900 text-white py-4 px-6 rounded-lg flex justify-between items-center">
-                            <span class="text-xl">No las sabías</span>
-                            <span id="arrow-no-conocidas" class="transform transition-transform">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                                </svg>
-                            </span>
-                        </button>
-                        <div id="panel-no-conocidas" class="hidden bg-purple-900 text-white p-6 rounded-b-lg">
-                            <ol class="list-decimal list-inside">
+                    <div tabindex="0" class="collapse collapse-arrow bg-purple-900 text-white rounded-lg">
+                        <div class="collapse-title text-lg font-medium py-3 px-4 flex justify-between items-center">
+                            <span>No las sabías</span>
+                        </div>
+                        <div class="collapse-content bg-purple-900 text-white p-4">
+                            <ol class="list-decimal list-inside text-sm">
                                 {% for flashcard in no_conocidas %}
-                                    <li class="mb-2">{{ flashcard.pregunta }}</li>
+                                    <li class="mb-1">{{ flashcard.pregunta }}</li>
                                 {% empty %}
                                     <li>No hay flashcards en esta categoría</li>
                                 {% endfor %}
@@ -105,13 +100,13 @@
             </div>
             
             <!-- Botones de navegación -->
-            <div class="flex flex-col sm:flex-row gap-4 mt-8">
+            <div class="flex flex-col gap-3 mt-6 w-full max-w-[500px]">
                 {% if parte_id %}
-                <a href="{% url 'estudiar_flashcards' parte_id %}" class="bg-white px-6 py-3 rounded-full shadow-lg text-center" style="color: var(--ctext1)">
+                <a href="{% url 'estudiar_flashcards' parte_id %}" class="bg-white px-5 py-3 rounded-full shadow-lg text-center w-full" style="color: var(--ctext1)">
                     Volver a estudiar flashcard
                 </a>
                 {% endif %}
-                <a href="{% url 'inicio' %}" class="bg-purple-700 text-white px-6 py-3 rounded-full shadow-lg text-center">
+                <a href="{% url 'inicio' %}" class="bg-purple-700 text-white px-5 py-3 rounded-full shadow-lg text-center w-full">
                     Ir a inicio
                 </a>
             </div>
@@ -120,28 +115,11 @@
 </div>
 
 <script>
-    // Funcionalidad de acordeón
-    function setupAccordion(toggleId, panelId, arrowId) {
-        const toggle = document.getElementById(toggleId);
-        const panel = document.getElementById(panelId);
-        const arrow = document.getElementById(arrowId);
-        
-        toggle.addEventListener('click', () => {
-            panel.classList.toggle('hidden');
-            arrow.classList.toggle('rotate-180');
-        });
-    }
-    
-    // Configurar los tres acordeones
-    setupAccordion('toggle-conocidas', 'panel-conocidas', 'arrow-conocidas');
-    setupAccordion('toggle-mas-o-menos', 'panel-mas-o-menos', 'arrow-mas-o-menos');
-    setupAccordion('toggle-no-conocidas', 'panel-no-conocidas', 'arrow-no-conocidas');
-    
     // Calcular alturas de barras proporcionales
     document.addEventListener('DOMContentLoaded', () => {
         const total = {{ total_conocidas|default:0 }} + {{ total_mas_o_menos|default:0 }} + {{ total_no_conocidas|default:0 }};
         if (total > 0) {
-            const maxHeight = 240; // altura máxima en píxeles
+            const maxHeight = 180; // altura máxima en píxeles
             
             const conocidas = document.querySelector('.bg-green-400');
             const masOMenos = document.querySelector('.bg-orange-300');

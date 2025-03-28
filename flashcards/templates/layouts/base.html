@@ -36,14 +36,14 @@
       <div class="drawer">
         <input id="my-drawer" type="checkbox" class="drawer-toggle" />
         <div
-          class="drawer-content px-16 py-6 flex justify-between items-center"
+          class="drawer-content flex justify-between items-center py-4 px-4 md:px-16"
         >
           <!-- Left menu button -->
           <label for="my-drawer" class="drawer-button"
             ><svg
               xmlns="http://www.w3.org/2000/svg"
-              width="32"
-              height="32"
+              width="24"
+              height="24"
               viewBox="0 0 24 24"
               fill="none"
               stroke="white"
@@ -59,21 +59,21 @@
           </label>
 
           <!-- Centered title -->
-          <h1 class="text-white text-2xl">
+          <h4 class="text-white text-xs sm:text-sm md:text-xl text-center mx-auto absolute left-0 right-0 max-w-fit">
             {% block page_title %}Histoflashcards{% endblock %}
-          </h1>
+          </h4>
 
           <!-- Right logos -->
           <div class="flex space-x-2">
             <img
               src="{% static 'images/institutional/Escudo-UDEC.png' %}"
               alt="Logo"
-              class="h-12"
+              class="h-8 md:h-12"
             />
             <img
               src="{% static 'images/institutional/Logo-facultad-de-medicina.png' %}"
               alt="Logo"
-              class="h-12"
+              class="h-8 md:h-12"
             />
           </div>
         </div>

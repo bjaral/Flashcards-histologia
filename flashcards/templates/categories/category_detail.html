@@ -1,6 +1,6 @@
 {% extends 'layouts/base.html' %}
 
-{% block page_title %}{{ categoria.nombre }}{% endblock %}
+{% block page_title %}Sistema{% endblock %}
 
 {% block content %}
 <div class="bg-gradient-to-b from-purple-100 to-purple-300 min-h-screen relative z-0 pt-8 px-6">
@@ -12,7 +12,7 @@
                 <img src="{{ parte.imagen_parte.url }}" 
                      alt="{{ parte.nombre }}"
                 >
-                <h5>{{ parte.nombre }}</h5>
+                <p class="p-2">{{ parte.nombre }}</p>
             </div>
             {% endfor %}
         </div>

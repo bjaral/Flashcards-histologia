@@ -11,6 +11,14 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+import os
+
+# Cargar variables de entorno desde .env
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,13 +28,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-sbklyij(w01(9+cua9do+ivo8%2ff*)rj12@oachcik8(=%vh*'
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-sbklyij(w01(9+cua9do+ivo8%2ff*)rj12@oachcik8(=%vh*')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DJANGO_DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = ['*']
-
+ALLOWED_HOSTS = ['histopatoudec.udec.cl', 'www.histopatoudec.udec.cl', 'localhost', '127.0.0.1']
 
 # Application definition
 
@@ -74,12 +81,67 @@ WSGI_APPLICATION = 'histo_udec.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+if os.environ.get('DJANGO_ENV') == 'production':
+    # Production database settings
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': os.environ.get('DB_NAME', 'histopatoudec'),
+            'USER': os.environ.get('DB_USER', 'histopatoudec'),
+            'PASSWORD': os.environ.get('DB_PASSWORD', 'XgGffyrhFT'),
+            'HOST': os.environ.get('DB_HOST', '127.0.0.1'),  # Usually localhost in production
+            'PORT': os.environ.get('DB_PORT', '3306'),
+            'OPTIONS': {
+                'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+                'charset': 'utf8mb4',  # Support for full Unicode character set
+            },
+            'CONN_MAX_AGE': 60,  # Keep connections alive for 60 seconds
+        }
     }
-}
+elif os.environ.get('USE_SQLITE', 'False') == 'True':
+    # SQLite fallback for development when MySQL is not available
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
+else:
+    # Development database settings with MySQL and automatic fallback to SQLite
+    mysql_config = {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'histopatoudec',
+        'USER': os.environ.get('DB_USER', 'histopatoudec'),
+        'PASSWORD': os.environ.get('DB_PASSWORD', 'XgGffyrhFT'),
+        'HOST': os.environ.get('DB_HOST', 'wordpress.udec.cl'),
+        'PORT': os.environ.get('DB_PORT', '3306'),
+        'OPTIONS': {
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+        },
+    }
+    
+    # Intentar conectar a MySQL y cambiar a SQLite si falla
+    try:
+        import MySQLdb
+        conn = MySQLdb.connect(
+            host=mysql_config['HOST'],
+            user=mysql_config['USER'],
+            passwd=mysql_config['PASSWORD'],
+            port=int(mysql_config['PORT']),
+            connect_timeout=3,  # Timeout corto para no bloquear la aplicación
+        )
+        conn.close()
+        print("✅ Conexión a MySQL exitosa, usando MySQL como base de datos.")
+        DATABASES = {'default': mysql_config}
+    except Exception as e:
+        print(f"❌ Error al conectar a MySQL: {e}")
+        print("🔄 Cambiando automáticamente a SQLite como fallback...")
+        DATABASES = {
+            'default': {
+                'ENGINE': 'django.db.backends.sqlite3',
+                'NAME': BASE_DIR / 'db.sqlite3',
+            }
+        }
 
 
 # Password validation

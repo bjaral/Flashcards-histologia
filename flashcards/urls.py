@@ -12,9 +12,11 @@ urlpatterns = [
     path('flashcards/', views.flashcards, name='flashcards'),
     path('flashcards/parte/<int:parte_id>/', views.parte_detalle, name='parte_detalle'),
     path('flashcards/estudiar/<int:parte_id>/', views.estudiar_flashcards, name='estudiar_flashcards'),
-    path('flashcards/estudiar/<int:parte_id>/<int:flashcard_id>/', views.estudiar_flashcards, name='estudiar_flashcard_especifica'),
     path('flashcards/resultados/<str:resultados>/', views.resultados, name='resultados'),
     
     # Sobre nosotros
     path('sobre-nosotros/', views.sobre_nosotros, name='sobre_nosotros'),
+    
+    # Db info
+    path('db-info/', views.db_info, name='db_info'),
 ]

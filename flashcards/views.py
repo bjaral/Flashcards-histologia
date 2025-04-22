@@ -1,5 +1,8 @@
 from django.shortcuts import render
 from .models import Parte, Categoria, Flashcard
+from django.http import JsonResponse
+from django.db import connections
+from django.conf import settings
 
 # Create your views here.
 def inicio(request):
@@ -97,3 +100,24 @@ def estudiar_flashcards(request, parte_id, flashcard_id=None):
 
 def sobre_nosotros(request):
     return render(request, 'about.html')
+
+def db_info(request):
+    """Vista para mostrar información de la base de datos actual."""
+    db_info = {
+        'engine': settings.DATABASES['default']['ENGINE'],
+        'name': str(settings.DATABASES['default']['NAME']),  # Convert WindowsPath to string
+        'host': settings.DATABASES['default'].get('HOST', 'N/A'),
+        'using_sqlite': 'sqlite' in settings.DATABASES['default']['ENGINE'],
+        'tables': []
+    }
+    
+    # Obtener lista de tablas
+    with connections['default'].cursor() as cursor:
+        if 'sqlite' in settings.DATABASES['default']['ENGINE']:
+            cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
+        else:
+            cursor.execute("SHOW TABLES;")
+        tables = cursor.fetchall()
+        db_info['tables'] = [table[0] for table in tables]
+    
+    return JsonResponse(db_info)

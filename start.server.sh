@@ -1,9 +1,5 @@
 #!/bin/bash
 
-# Recolectar archivos estáticos
-echo "Recolectando archivos estáticos..."
-python manage.py collectstatic --noinput
-
 # Aplicar migraciones
 echo "🛠Aplicando migraciones..."
 python manage.py migrate

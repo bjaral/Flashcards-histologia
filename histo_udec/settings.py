@@ -33,7 +33,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-sbklyij(w01(9+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DJANGO_DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = ['histopatoudec.udec.cl', 'www.histopatoudec.udec.cl', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['histopatoudec.udec.cl', 'www.histopatoudec.udec.cl', 'localhost', '127.0.0.1', 'histoflashcards.onrender.com']
 
 # Application definition
 
